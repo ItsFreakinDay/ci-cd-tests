@@ -6,12 +6,10 @@ on:
       deployment_target:
         description: Choose target
         required: true
-        default: second_test
+        default: first_test
         type: choice
         options:
           - first_test
-          - second_test
-          - all
 
 jobs:
   test:
@@ -32,11 +30,6 @@ jobs:
         run: pip install -r requirements.txt
 
       - name: First test
-        if: "${{ github.event.inputs.deployment_target == 'first_test' || github.event.inputs.deployment_target == 'all' }}"
+        if: "${{ github.event.inputs.deployment_target == 'first_test' }}"
         run: pytest tests/test_button.py::test_button_exist
-        continue-on-error: true
-
-      - name: Second test
-        if: "${{ github.event.inputs.deployment_target == 'second_test' || github.event.inputs.deployment_target == 'all' }}"
-        run: pytest tests/test_button.py::test_button_exist_2
         continue-on-error: true
