@@ -19,24 +19,24 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-
-      - name: Setup Python
+        
+      - name: setup Python
         uses: actions/setup-python@v4
         with:
           python-version: "3.11"
-
+          
       - name: Install Chrome
         run: sudo apt-get install google-chrome-stable
-
-      - name: Install dependencies
+        
+      - name: install dependencies
         run: pip install -r requirements.txt
-
-      - name: First test
-        if: "${{ github.event.inputs.deployment_target == 'first_test' || github.event.inputs.deployment_target == 'all' }}"
+        
+      - name: first_test
+        if: "github.event.inputs.deployment_target == 'first_test'"
         run: pytest tests/test_button.py::test_button_exist
         continue-on-error: true
-
-      - name: Second test
-        if: "${{ github.event.inputs.deployment_target == 'second_test' || github.event.inputs.deployment_target == 'all' }}"
+        
+      - name: second_test
+        if: "github.event.inputs.deployment_target == 'second_test'"
         run: pytest tests/test_button.py::test_button_exist_2
         continue-on-error: true
